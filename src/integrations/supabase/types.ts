@@ -14,7 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          ai_use_case: string | null
+          company: string | null
+          created_at: string
+          email: string
+          employees: string | null
+          id: string
+          notes: string | null
+          scan_id: string | null
+          source: string
+        }
+        Insert: {
+          ai_use_case?: string | null
+          company?: string | null
+          created_at?: string
+          email: string
+          employees?: string | null
+          id?: string
+          notes?: string | null
+          scan_id?: string | null
+          source?: string
+        }
+        Update: {
+          ai_use_case?: string | null
+          company?: string | null
+          created_at?: string
+          email?: string
+          employees?: string | null
+          id?: string
+          notes?: string | null
+          scan_id?: string | null
+          source?: string
+        }
+        Relationships: []
+      }
+      scans: {
+        Row: {
+          classification: string | null
+          created_at: string
+          email: string | null
+          error: string | null
+          full_report: Json | null
+          id: string
+          repo_url: string | null
+          score: number | null
+          status: string
+          top_risks: Json | null
+          uploaded_files_meta: Json | null
+        }
+        Insert: {
+          classification?: string | null
+          created_at?: string
+          email?: string | null
+          error?: string | null
+          full_report?: Json | null
+          id?: string
+          repo_url?: string | null
+          score?: number | null
+          status?: string
+          top_risks?: Json | null
+          uploaded_files_meta?: Json | null
+        }
+        Update: {
+          classification?: string | null
+          created_at?: string
+          email?: string | null
+          error?: string | null
+          full_report?: Json | null
+          id?: string
+          repo_url?: string | null
+          score?: number | null
+          status?: string
+          top_risks?: Json | null
+          uploaded_files_meta?: Json | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
