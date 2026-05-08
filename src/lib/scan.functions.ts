@@ -54,8 +54,8 @@ export const runScan = createServerFn({ method: "POST" })
           status: "complete",
           score: assessment.readiness_score,
           classification: assessment.classification,
-          top_risks: assessment.top_risks,
-          full_report: assessment as unknown as Record<string, unknown>,
+          top_risks: assessment.top_risks as unknown as never,
+          full_report: assessment as unknown as never,
         })
         .eq("id", scanId);
 
