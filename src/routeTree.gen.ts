@@ -9,38 +9,174 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TimelineRouteImport } from './routes/timeline'
+import { Route as ScanRouteImport } from './routes/scan'
+import { Route as ProductRouteImport } from './routes/product'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AuditRouteImport } from './routes/audit'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ScanResultScanIdRouteImport } from './routes/scan.result.$scanId'
 
+const TimelineRoute = TimelineRouteImport.update({
+  id: '/timeline',
+  path: '/timeline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScanRoute = ScanRouteImport.update({
+  id: '/scan',
+  path: '/scan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductRoute = ProductRouteImport.update({
+  id: '/product',
+  path: '/product',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditRoute = AuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScanResultScanIdRoute = ScanResultScanIdRouteImport.update({
+  id: '/result/$scanId',
+  path: '/result/$scanId',
+  getParentRoute: () => ScanRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/audit': typeof AuditRoute
+  '/contact': typeof ContactRoute
+  '/pricing': typeof PricingRoute
+  '/product': typeof ProductRoute
+  '/scan': typeof ScanRouteWithChildren
+  '/timeline': typeof TimelineRoute
+  '/scan/result/$scanId': typeof ScanResultScanIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/audit': typeof AuditRoute
+  '/contact': typeof ContactRoute
+  '/pricing': typeof PricingRoute
+  '/product': typeof ProductRoute
+  '/scan': typeof ScanRouteWithChildren
+  '/timeline': typeof TimelineRoute
+  '/scan/result/$scanId': typeof ScanResultScanIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/audit': typeof AuditRoute
+  '/contact': typeof ContactRoute
+  '/pricing': typeof PricingRoute
+  '/product': typeof ProductRoute
+  '/scan': typeof ScanRouteWithChildren
+  '/timeline': typeof TimelineRoute
+  '/scan/result/$scanId': typeof ScanResultScanIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/audit'
+    | '/contact'
+    | '/pricing'
+    | '/product'
+    | '/scan'
+    | '/timeline'
+    | '/scan/result/$scanId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/audit'
+    | '/contact'
+    | '/pricing'
+    | '/product'
+    | '/scan'
+    | '/timeline'
+    | '/scan/result/$scanId'
+  id:
+    | '__root__'
+    | '/'
+    | '/audit'
+    | '/contact'
+    | '/pricing'
+    | '/product'
+    | '/scan'
+    | '/timeline'
+    | '/scan/result/$scanId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuditRoute: typeof AuditRoute
+  ContactRoute: typeof ContactRoute
+  PricingRoute: typeof PricingRoute
+  ProductRoute: typeof ProductRoute
+  ScanRoute: typeof ScanRouteWithChildren
+  TimelineRoute: typeof TimelineRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/timeline': {
+      id: '/timeline'
+      path: '/timeline'
+      fullPath: '/timeline'
+      preLoaderRoute: typeof TimelineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scan': {
+      id: '/scan'
+      path: '/scan'
+      fullPath: '/scan'
+      preLoaderRoute: typeof ScanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/product': {
+      id: '/product'
+      path: '/product'
+      fullPath: '/product'
+      preLoaderRoute: typeof ProductRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audit': {
+      id: '/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +184,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scan/result/$scanId': {
+      id: '/scan/result/$scanId'
+      path: '/result/$scanId'
+      fullPath: '/scan/result/$scanId'
+      preLoaderRoute: typeof ScanResultScanIdRouteImport
+      parentRoute: typeof ScanRoute
+    }
   }
 }
 
+interface ScanRouteChildren {
+  ScanResultScanIdRoute: typeof ScanResultScanIdRoute
+}
+
+const ScanRouteChildren: ScanRouteChildren = {
+  ScanResultScanIdRoute: ScanResultScanIdRoute,
+}
+
+const ScanRouteWithChildren = ScanRoute._addFileChildren(ScanRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuditRoute: AuditRoute,
+  ContactRoute: ContactRoute,
+  PricingRoute: PricingRoute,
+  ProductRoute: ProductRoute,
+  ScanRoute: ScanRouteWithChildren,
+  TimelineRoute: TimelineRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
