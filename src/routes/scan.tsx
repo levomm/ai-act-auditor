@@ -43,11 +43,11 @@ function ScanPage() {
             Free scan
           </div>
           <h1 className="mt-3 text-balance text-4xl font-semibold tracking-tight md:text-5xl">
-            EU AI Act ready? Find out in 5 minutes.
+            Run a free readiness scan
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground md:text-base">
-            Connect a public GitHub repo or paste your AI system documentation. We email your full
-            report and show the headline result on screen.
+            Public repo or architecture summary only. Do not submit sensitive internal material
+            through the free form — private systems go through the guided audit flow.
           </p>
         </div>
       </section>
@@ -148,10 +148,11 @@ function ScanPage() {
             >
               {loading ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin" /> Scanning… (~30–60s)
+                  <Loader2 className="h-4 w-4 animate-spin" /> Reviewing your inputs and mapping
+                  likely evidence gaps…
                 </>
               ) : (
-                "Run free scan"
+                "Generate readiness report"
               )}
             </button>
             <p className="text-center text-[11px] text-muted-foreground">

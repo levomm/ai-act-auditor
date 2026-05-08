@@ -7,8 +7,7 @@ export function Footer() {
         <div>
           <div className="text-sm font-semibold">ActReady</div>
           <p className="mt-2 text-xs text-muted-foreground">
-            EU AI Act compliance audit agent. Built for engineering and compliance teams that need
-            evidence, not slide decks.
+            EU AI Act readiness for teams shipping AI into Europe. Built like a tool, not a deck.
           </p>
         </div>
         <div>
@@ -30,8 +29,8 @@ export function Footer() {
         <div>
           <div className="text-xs font-medium text-muted-foreground">Disclaimer</div>
           <p className="mt-3 text-xs text-muted-foreground">
-            ActReady provides technical audit tooling, not legal advice. For binding interpretation of the EU
-            AI Act, consult qualified counsel.
+            ActReady is a readiness and evidence-mapping tool. It does not replace formal legal
+            review, conformity assessment, or regulator guidance.
           </p>
         </div>
       </div>

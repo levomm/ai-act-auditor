@@ -3,11 +3,11 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const nav = [
-  { to: "/product", label: "Product" },
-  { to: "/pricing", label: "Pricing" },
-  { to: "/audit", label: "DFY Audit" },
-  { to: "/timeline", label: "Timeline" },
-  { to: "/contact", label: "Contact" },
+  { to: "/product", label: "How it works", hash: undefined },
+  { to: "/", label: "Outputs", hash: "outputs" },
+  { to: "/pricing", label: "Pricing", hash: undefined },
+  { to: "/audit", label: "DFY audit", hash: undefined },
+  { to: "/", label: "FAQ", hash: "faq" },
 ] as const;
 
 export function Header() {
@@ -24,14 +24,14 @@ export function Header() {
             </svg>
           </div>
           <span className="text-sm font-semibold tracking-tight">ActReady</span>
-          <span className="hidden text-xs text-muted-foreground sm:inline">/ EU AI Act audit agent</span>
         </Link>
 
         <nav className="hidden items-center gap-7 md:flex">
           {nav.map((n) => (
             <Link
-              key={n.to}
+              key={n.label}
               to={n.to}
+              hash={n.hash}
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
               activeProps={{ className: "text-foreground" }}
             >
@@ -45,7 +45,7 @@ export function Header() {
             to="/scan"
             className="hidden rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 sm:inline-flex"
           >
-            Free repo scan
+            Run free scan
           </Link>
           <button
             className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border md:hidden"
@@ -62,8 +62,9 @@ export function Header() {
           <div className="mx-auto flex max-w-7xl flex-col px-4 py-3">
             {nav.map((n) => (
               <Link
-                key={n.to}
+                key={n.label}
                 to={n.to}
+                hash={n.hash}
                 onClick={() => setOpen(false)}
                 className="py-2 text-sm text-muted-foreground"
                 activeProps={{ className: "text-foreground" }}
@@ -76,7 +77,7 @@ export function Header() {
               onClick={() => setOpen(false)}
               className="mt-2 inline-flex items-center justify-center rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground"
             >
-              Free repo scan
+              Run free scan
             </Link>
           </div>
         </div>
