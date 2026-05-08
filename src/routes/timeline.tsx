@@ -22,7 +22,14 @@ export const Route = createFileRoute("/timeline")({
   component: TimelinePage,
 });
 
-const events = [
+type Event = {
+  date: string;
+  title: string;
+  body: string;
+  highlight?: boolean;
+};
+
+const events: Event[] = [
   {
     date: "2 February 2025",
     title: "Prohibited AI practices in force",
@@ -45,7 +52,7 @@ const events = [
     title: "Annex I product-regulated systems",
     body: "Extended deadline for high-risk AI embedded in regulated products (medical devices, machinery, etc.). Don't read this as 'we have time' — your enterprise buyers won't.",
   },
-] as const;
+];
 
 function TimelinePage() {
   return (
