@@ -5,17 +5,17 @@ import { Check } from "lucide-react";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — ActReady SaaS and Done-For-You audit" },
+      { title: "Pricing — ActReady readiness scans, Pro, and DFY audit" },
       {
         name: "description",
         content:
-          "Two ways to get EU AI Act ready: $299/month SaaS for continuous scans, or a $2,000–$5,000 done-for-you audit with workshop and policy pack.",
+          "Free readiness scan, Pro at $299/month for ongoing tracking, or a $2,000–$5,000 done-for-you audit when procurement is breathing down your neck.",
       },
       { property: "og:title", content: "ActReady pricing" },
       {
         property: "og:description",
         content:
-          "SaaS from $299/mo. DFY audit from $2,000. Pick the level of hand-holding your team needs.",
+          "Free scan. Pro from $299/mo. DFY audit from $2,000. Pick the level of support your team needs.",
       },
     ],
   }),
@@ -24,39 +24,54 @@ export const Route = createFileRoute("/pricing")({
 
 const tiers = [
   {
-    name: "SaaS",
-    price: "$299",
-    cadence: "per month",
-    blurb: "Continuous scans, dashboards and exports for one product or repo.",
-    cta: "Join waitlist",
-    href: "/contact" as const,
+    name: "Free scan",
+    price: "$0",
+    cadence: "one-off",
+    blurb: "A lightweight readiness pass for public repo inputs or architecture summaries.",
+    cta: "Run free readiness scan",
+    href: "/scan" as const,
     features: [
-      "Unlimited automated repo & docs scans",
-      "Readiness score history & trend",
-      "Gap analysis mapped to AI Act articles",
-      "Evidence checklist & exportable report",
-      "Email alerts when controls regress",
-      "1 workspace, up to 5 seats",
+      "Initial readiness score",
+      "Likely exposure snapshot",
+      "Top missing controls",
+      "Top missing evidence",
+      "Upgrade path to full audit",
     ],
     featured: false,
   },
   {
-    name: "DFY Audit",
+    name: "Pro",
+    price: "$299",
+    cadence: "per month",
+    blurb:
+      "Ongoing readiness tracking and structured evidence management for teams shipping AI features.",
+    cta: "Start Pro",
+    href: "/contact" as const,
+    features: [
+      "Recurring scans",
+      "Evidence gap tracking",
+      "Report history",
+      "Team-ready exports",
+      "Priority remediation views",
+    ],
+    featured: true,
+  },
+  {
+    name: "DFY audit",
     price: "$2,000–$5,000",
     cadence: "per engagement",
     blurb:
-      "Manual expert review on top of the agent, plus a remediation workshop and policy pack.",
+      "Hands-on audit readiness support for teams facing procurement, customer diligence, or internal governance deadlines.",
     cta: "Book DFY audit",
     href: "/audit" as const,
     features: [
-      "Everything in SaaS",
-      "Manual technical review by an auditor",
-      "1.5h remediation workshop with your team",
-      "AI Act policy & governance pack (templates)",
-      "Audit-prep dossier for enterprise procurement",
-      "Optional pre-conformity assessment review",
+      "Guided review",
+      "Deep evidence mapping",
+      "Remediation workshop",
+      "Documentation plan",
+      "Audit and procurement prep",
     ],
-    featured: true,
+    featured: false,
   },
 ] as const;
 
@@ -69,21 +84,21 @@ function PricingPage() {
             Pricing
           </div>
           <h1 className="mx-auto mt-3 max-w-3xl text-balance text-4xl font-semibold tracking-tight md:text-5xl">
-            Two ways to get audit-ready.
+            Three ways to get audit-ready.
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground md:text-base">
-            Run the agent yourself on a SaaS plan, or hand it to us for a done-for-you audit when
-            procurement is breathing down your neck.
+            Start with a free scan. Track readiness on Pro. Hand it to us when procurement is
+            breathing down your neck.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <div className="grid gap-6 md:grid-cols-2">
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+        <div className="grid gap-6 md:grid-cols-3">
           {tiers.map((t) => (
             <div
               key={t.name}
-              className={`rounded-xl border p-7 ${
+              className={`flex flex-col rounded-xl border p-7 ${
                 t.featured
                   ? "border-primary/40 bg-surface-2 ring-1 ring-primary/20"
                   : "border-border bg-surface-1"
