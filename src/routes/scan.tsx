@@ -110,7 +110,9 @@ function ScanPage() {
 
             {mode === "repo" ? (
               <label className="block">
-                <span className="text-xs font-medium text-muted-foreground">Public GitHub repo URL</span>
+                <span className="text-xs font-medium text-muted-foreground">
+                  Public GitHub repo URL
+                </span>
                 <input
                   type="url"
                   required
@@ -120,7 +122,8 @@ function ScanPage() {
                   className="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 font-mono text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
                 />
                 <span className="mt-1 block text-xs text-muted-foreground">
-                  We read the README, file tree and metadata. Nothing is cloned or stored beyond the report.
+                  We read the README, file tree and metadata. Nothing is cloned or stored beyond the
+                  report.
                 </span>
               </label>
             ) : (
@@ -156,7 +159,8 @@ function ScanPage() {
               )}
             </button>
             <p className="text-center text-[11px] text-muted-foreground">
-              By submitting you agree to receive your report by email. No spam — single email per scan.
+              By submitting you agree to receive your report by email. No spam — single email per
+              scan.
             </p>
           </form>
         </div>

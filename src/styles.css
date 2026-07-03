@@ -42,7 +42,9 @@
   --color-chart-4: var(--destructive);
   --color-chart-5: var(--muted-foreground);
 
-  --font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui,
+    sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -121,12 +123,17 @@
     font-feature-settings: "cv11", "ss01", "ss03";
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     letter-spacing: -0.02em;
     font-weight: 600;
   }
 
-  h1 { letter-spacing: -0.035em; }
+  h1 {
+    letter-spacing: -0.035em;
+  }
 
   ::selection {
     background-color: color-mix(in oklab, var(--primary) 35%, transparent);
@@ -139,6 +146,9 @@
   }
   .text-balance {
     text-wrap: balance;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
   }
   .bg-grid {
     background-image:

@@ -14,8 +14,7 @@ export const Route = createFileRoute("/timeline")({
       { property: "og:title", content: "EU AI Act enforcement timeline" },
       {
         property: "og:description",
-        content:
-          "Prepare now, not when legal panics. Concrete dates and what to do before each.",
+        content: "Prepare now, not when legal panics. Concrete dates and what to do before each.",
       },
     ],
   }),
@@ -43,8 +42,7 @@ const events: Event[] = [
   {
     date: "2 August 2026",
     title: "High-risk AI obligations apply",
-    body:
-      "The big one. Risk management, data governance, technical documentation, logging, transparency, human oversight, accuracy & robustness — all enforceable for high-risk systems.",
+    body: "The big one. Risk management, data governance, technical documentation, logging, transparency, human oversight, accuracy & robustness — all enforceable for high-risk systems.",
     highlight: true,
   },
   {
@@ -67,10 +65,10 @@ function TimelinePage() {
               Prepare now — not when legal panics.
             </h1>
             <p className="mt-5 text-base text-muted-foreground md:text-lg">
-              The EU AI Act's high-risk obligations apply from <span className="text-foreground">2 August 2026</span>.
-              Annex I product-regulated systems get an extra year. But enterprise procurement and
-              notified-body capacity tell a different story: the market is buying audit-readiness
-              right now.
+              The EU AI Act's high-risk obligations apply from{" "}
+              <span className="text-foreground">2 August 2026</span>. Annex I product-regulated
+              systems get an extra year. But enterprise procurement and notified-body capacity tell
+              a different story: the market is buying audit-readiness right now.
             </p>
           </div>
         </div>
@@ -87,9 +85,7 @@ function TimelinePage() {
               />
               <div
                 className={`rounded-xl border p-5 ${
-                  e.highlight
-                    ? "border-primary/40 bg-surface-2"
-                    : "border-border bg-surface-1"
+                  e.highlight ? "border-primary/40 bg-surface-2" : "border-border bg-surface-1"
                 }`}
               >
                 <div className="flex items-baseline justify-between gap-4">

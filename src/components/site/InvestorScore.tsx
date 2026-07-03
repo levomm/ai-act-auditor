@@ -20,10 +20,7 @@ export function InvestorScore() {
               <div key={label} className="flex items-center gap-4">
                 <span className="w-44 text-sm text-muted-foreground">{label}</span>
                 <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface-3">
-                  <div
-                    className="h-full bg-primary"
-                    style={{ width: `${(score / 10) * 100}%` }}
-                  />
+                  <div className="h-full bg-primary" style={{ width: `${(score / 10) * 100}%` }} />
                 </div>
                 <span className="w-12 text-right font-mono text-sm">{score}/10</span>
               </div>
@@ -35,8 +32,8 @@ export function InvestorScore() {
                 Skeptic
               </div>
               <p className="mt-2 text-foreground">
-                "Regulation shifts, but demand for auditability, evidence, and procurement-readiness is
-                already here."
+                "Regulation shifts, but demand for auditability, evidence, and procurement-readiness
+                is already here."
               </p>
             </div>
             <div>

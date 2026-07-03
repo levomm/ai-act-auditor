@@ -24,23 +24,19 @@ export const Route = createFileRoute("/audit")({
 const deliverables = [
   {
     title: "Manual technical review",
-    body:
-      "An auditor reviews the agent's output, deepens it with code-level inspection, and validates classification against your real system architecture.",
+    body: "An auditor reviews the agent's output, deepens it with code-level inspection, and validates classification against your real system architecture.",
   },
   {
     title: "Remediation workshop",
-    body:
-      "90 minutes with your engineering, product and compliance leads. Walk through every gap, prioritize, and assign ownership.",
+    body: "90 minutes with your engineering, product and compliance leads. Walk through every gap, prioritize, and assign ownership.",
   },
   {
     title: "Policy & governance pack",
-    body:
-      "Risk management policy, data governance procedure, human oversight playbook, incident logging template, model card template — all opinionated, all editable.",
+    body: "Risk management policy, data governance procedure, human oversight playbook, incident logging template, model card template — all opinionated, all editable.",
   },
   {
     title: "Audit-prep dossier",
-    body:
-      "A consolidated evidence package designed to pass an enterprise security/AI questionnaire or a notified-body pre-check.",
+    body: "A consolidated evidence package designed to pass an enterprise security/AI questionnaire or a notified-body pre-check.",
   },
 ] as const;
 
@@ -98,7 +94,9 @@ function AuditPage() {
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
           <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
             <div>
-              <h3 className="text-2xl font-semibold tracking-tight">Not sure if you're high-risk?</h3>
+              <h3 className="text-2xl font-semibold tracking-tight">
+                Not sure if you're high-risk?
+              </h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 Start with the free agent scan. It returns a classification you can sanity-check
                 before booking.

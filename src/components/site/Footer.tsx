@@ -13,17 +13,41 @@ export function Footer() {
         <div>
           <div className="text-xs font-medium text-muted-foreground">Product</div>
           <ul className="mt-3 space-y-2 text-sm">
-            <li><Link to="/product" className="hover:text-foreground text-muted-foreground">How it works</Link></li>
-            <li><Link to="/scan" className="hover:text-foreground text-muted-foreground">Free repo scan</Link></li>
-            <li><Link to="/pricing" className="hover:text-foreground text-muted-foreground">Pricing</Link></li>
+            <li>
+              <Link to="/product" className="hover:text-foreground text-muted-foreground">
+                How it works
+              </Link>
+            </li>
+            <li>
+              <Link to="/scan" className="hover:text-foreground text-muted-foreground">
+                Free repo scan
+              </Link>
+            </li>
+            <li>
+              <Link to="/pricing" className="hover:text-foreground text-muted-foreground">
+                Pricing
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
           <div className="text-xs font-medium text-muted-foreground">Services</div>
           <ul className="mt-3 space-y-2 text-sm">
-            <li><Link to="/audit" className="hover:text-foreground text-muted-foreground">DFY audit</Link></li>
-            <li><Link to="/timeline" className="hover:text-foreground text-muted-foreground">AI Act timeline</Link></li>
-            <li><Link to="/contact" className="hover:text-foreground text-muted-foreground">Talk to us</Link></li>
+            <li>
+              <Link to="/audit" className="hover:text-foreground text-muted-foreground">
+                DFY audit
+              </Link>
+            </li>
+            <li>
+              <Link to="/timeline" className="hover:text-foreground text-muted-foreground">
+                AI Act timeline
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-foreground text-muted-foreground">
+                Talk to us
+              </Link>
+            </li>
           </ul>
         </div>
         <div>

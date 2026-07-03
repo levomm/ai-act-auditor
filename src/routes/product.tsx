@@ -27,26 +27,22 @@ const steps = [
   {
     icon: GitBranch,
     title: "1. Connect your code & docs",
-    body:
-      "Paste a GitHub repo URL or upload technical documentation. The agent ingests structure, dependencies, READMEs, model cards and policies.",
+    body: "Paste a GitHub repo URL or upload technical documentation. The agent ingests structure, dependencies, READMEs, model cards and policies.",
   },
   {
     icon: Brain,
     title: "2. Classify high-risk exposure",
-    body:
-      "We map your use case against Annex III categories and adjacent product-regulated zones, with a clear classification and confidence note.",
+    body: "We map your use case against Annex III categories and adjacent product-regulated zones, with a clear classification and confidence note.",
   },
   {
     icon: ClipboardList,
     title: "3. Map controls to articles",
-    body:
-      "Every gap is anchored to specific EU AI Act articles — Art. 9, 10, 11, 12, 13, 14, 15 — with status, severity and a concrete fix.",
+    body: "Every gap is anchored to specific EU AI Act articles — Art. 9, 10, 11, 12, 13, 14, 15 — with status, severity and a concrete fix.",
   },
   {
     icon: FileCheck2,
     title: "4. Generate audit-ready evidence",
-    body:
-      "Executive summary, remediation roadmap, policy templates and a structured evidence package you can ship to procurement or counsel.",
+    body: "Executive summary, remediation roadmap, policy templates and a structured evidence package you can ship to procurement or counsel.",
   },
 ] as const;
 
@@ -89,8 +85,8 @@ function ProductPage() {
             <div>
               <h2 className="text-3xl font-semibold tracking-tight">What the report contains</h2>
               <p className="mt-3 text-sm text-muted-foreground">
-                Every scan produces the same structured artefacts. The DFY audit adds manual
-                review, workshop and a policy pack on top.
+                Every scan produces the same structured artefacts. The DFY audit adds manual review,
+                workshop and a policy pack on top.
               </p>
             </div>
             <ul className="space-y-4 text-sm">
