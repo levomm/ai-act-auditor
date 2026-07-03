@@ -30,7 +30,8 @@ function parseGithubUrl(url: string): { owner: string; repo: string } | null {
 
 export async function fetchRepoContext(repoUrl: string): Promise<RepoContext> {
   const parsed = parseGithubUrl(repoUrl);
-  if (!parsed) throw new Error("Invalid GitHub URL. Use a public repo like https://github.com/owner/name");
+  if (!parsed)
+    throw new Error("Invalid GitHub URL. Use a public repo like https://github.com/owner/name");
 
   const { owner, repo } = parsed;
   const headers: Record<string, string> = {
@@ -108,7 +109,13 @@ const TOOL = {
         },
         classification: {
           type: "string",
-          enum: ["likely_high_risk", "possibly_high_risk", "limited_risk", "minimal_risk", "unclear"],
+          enum: [
+            "likely_high_risk",
+            "possibly_high_risk",
+            "limited_risk",
+            "minimal_risk",
+            "unclear",
+          ],
         },
         executive_summary: {
           type: "string",
@@ -121,7 +128,10 @@ const TOOL = {
           items: {
             type: "object",
             properties: {
-              article: { type: "string", description: "EU AI Act article reference, e.g. 'Art. 9'." },
+              article: {
+                type: "string",
+                description: "EU AI Act article reference, e.g. 'Art. 9'.",
+              },
               control: { type: "string" },
               status: { type: "string", enum: ["missing", "partial", "compliant"] },
               severity: { type: "string", enum: ["high", "medium", "low"] },
@@ -139,7 +149,13 @@ const TOOL = {
           items: { type: "string" },
         },
       },
-      required: ["readiness_score", "classification", "executive_summary", "top_risks", "next_steps"],
+      required: [
+        "readiness_score",
+        "classification",
+        "executive_summary",
+        "top_risks",
+        "next_steps",
+      ],
       additionalProperties: false,
     },
   },
@@ -148,11 +164,7 @@ const TOOL = {
 export type Assessment = {
   readiness_score: number;
   classification:
-    | "likely_high_risk"
-    | "possibly_high_risk"
-    | "limited_risk"
-    | "minimal_risk"
-    | "unclear";
+    "likely_high_risk" | "possibly_high_risk" | "limited_risk" | "minimal_risk" | "unclear";
   executive_summary: string;
   top_risks: Array<{
     article: string;
@@ -169,8 +181,9 @@ export async function runAssessment(ctx: RepoContext): Promise<Assessment> {
   const apiKey = process.env.LOVABLE_API_KEY;
   if (!apiKey) throw new Error("LOVABLE_API_KEY not configured.");
 
-  const userContent = ctx.source === "github"
-    ? `Repository: ${ctx.repoFullName}
+  const userContent =
+    ctx.source === "github"
+      ? `Repository: ${ctx.repoFullName}
 URL: ${ctx.url}
 Primary language: ${ctx.language ?? "unknown"}
 Description: ${ctx.description ?? "(none)"}
@@ -183,7 +196,7 @@ README (truncated):
 """
 ${ctx.readme ?? "(no README)"}
 """`
-    : `Pasted documentation:
+      : `Pasted documentation:
 """
 ${ctx.uploadedText ?? ""}
 """`;

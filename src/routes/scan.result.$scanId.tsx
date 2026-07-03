@@ -130,7 +130,9 @@ function ScanResult() {
   const risks = row.top_risks ?? [];
   const summary = row.full_report?.executive_summary;
   const nextSteps = row.full_report?.next_steps ?? [];
-  const cls = row.classification ? classificationLabel[row.classification] ?? row.classification : "—";
+  const cls = row.classification
+    ? (classificationLabel[row.classification] ?? row.classification)
+    : "—";
 
   return (
     <SiteLayout>
@@ -140,7 +142,9 @@ function ScanResult() {
             Readiness report
           </div>
           {row.repo_url && (
-            <div className="mt-1 truncate font-mono text-xs text-muted-foreground">{row.repo_url}</div>
+            <div className="mt-1 truncate font-mono text-xs text-muted-foreground">
+              {row.repo_url}
+            </div>
           )}
           <div className="mt-6 grid gap-6 md:grid-cols-3">
             <div className="rounded-xl border border-border bg-surface-1 p-6 md:col-span-2">
@@ -158,7 +162,9 @@ function ScanResult() {
               {summary && <p className="mt-5 text-sm text-foreground">{summary}</p>}
             </div>
             <div className="rounded-xl border border-border bg-surface-1 p-6">
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">Classification</div>
+              <div className="text-xs uppercase tracking-widest text-muted-foreground">
+                Classification
+              </div>
               <div className="mt-2 text-lg font-semibold">{cls}</div>
               <Link
                 to="/audit"
@@ -255,7 +261,9 @@ function StatusPill({ status }: { status: TopRisk["status"] }) {
     compliant: "border-success/40 bg-success/10 text-success",
   };
   return (
-    <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${styles[status]}`}>
+    <span
+      className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${styles[status]}`}
+    >
       <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-current" />
       {status}
     </span>
@@ -269,7 +277,9 @@ function SeverityPill({ sev }: { sev: TopRisk["severity"] }) {
     low: "border-success/40 text-success",
   };
   return (
-    <span className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium uppercase tracking-wider ${styles[sev]}`}>
+    <span
+      className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium uppercase tracking-wider ${styles[sev]}`}
+    >
       {sev}
     </span>
   );

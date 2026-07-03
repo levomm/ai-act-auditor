@@ -6,7 +6,10 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-border">
       <div className="absolute inset-0 bg-grid opacity-30" aria-hidden />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" aria-hidden />
+      <div
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+        aria-hidden
+      />
       <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-16 sm:px-6 md:pb-20 md:pt-24">
         <div className="mx-auto max-w-3xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-1 px-3 py-1 text-xs text-muted-foreground">

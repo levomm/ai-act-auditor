@@ -1,4 +1,3 @@
-
 # EU AI Act Compliance Auditor Agent — 24h GTM build
 
 Eesmärk: developer-first, dark, Linear-stiilis marketing site + töötav tasuta "5-minute repo scan" lead magnet, mis konverteerib SaaS ($299/mo) või DFY auditi ($2k–5k) lead'iks.
@@ -6,6 +5,7 @@ Eesmärk: developer-first, dark, Linear-stiilis marketing site + töötav tasuta
 ## Scope (mida ehitame)
 
 **Routed marketing site** (TanStack Start, eraldi route igale lehele — ei mingit hash-nav):
+
 - `/` — Hero + probleem + agent demo preview + sotsiaalne tõestus + CTA
 - `/product` — Kuidas agent töötab (repo scan → gap analysis → evidence package)
 - `/pricing` — SaaS $299/mo vs DFY $2k–5k retainer
@@ -16,6 +16,7 @@ Eesmärk: developer-first, dark, Linear-stiilis marketing site + töötav tasuta
 - `/contact` — Booking DFY auditile
 
 **Funktsionaalsus esimeses iteratsioonis:**
+
 - Tasuta scan: kasutaja kleebib avaliku GitHub repo URL-i VÕI laeb üles dokumendid (PDF/MD/TXT)
 - Backend tõmbab repo metadata + README + märksõnad failidest, saadab AI-le (Lovable AI Gateway, gemini-3-flash) struktureeritud analüüsiks
 - AI tagastab: high-risk classification likelihood (0–100), readiness score, top 3 puudust, soovitatud remediation, mapping AI Act artiklitele
@@ -24,6 +25,7 @@ Eesmärk: developer-first, dark, Linear-stiilis marketing site + töötav tasuta
 - DFY booking: lihtne vorm (nimi, ettevõte, töötajate arv, AI use case, email) → salvestab leads tabelisse
 
 **Mida v1-s EI tee** (selgelt välja kirjutatud, et scope ei paisuks):
+
 - Ei tegelikku Stripe checkouti $299 SaaS'ile (CTA = "Join waitlist" + email)
 - Ei OAuth GitHub integratsiooni (ainult avalik repo URL v1-s)
 - Ei watermarking tooli (mainime lehel, aga build hiljem)
@@ -34,12 +36,14 @@ Eesmärk: developer-first, dark, Linear-stiilis marketing site + töötav tasuta
 Vaja, sest scan'id ja leadid peavad persisteerima + AI Gateway võti.
 
 Tabelid:
+
 - `scans` — id, email, repo_url, uploaded_files_meta, score, classification, top_risks (jsonb), full_report (jsonb), created_at
 - `leads` — id, email, source ('scan' | 'dfy_booking' | 'waitlist'), company, employees, ai_use_case, notes, created_at
 
 RLS: mõlemad tabelid — insert public (anon), select ainult oma scan_id järgi (avalikkusele jagatav link kasutab scan_id-d kui salajast tokenit; pole PII). Leads — ainult insert public, select keelatud anon'ile.
 
 Edge / server functions:
+
 - `runScan` — sisend: repo_url või uploaded text. Tõmbab GitHubi avaliku API-ga repo metadata + README + top-level failipuu, koondab konteksti, kutsub Lovable AI Gateway'd structured tool-calling'uga, salvestab `scans` tabelisse, tagastab scan_id.
 - `submitLead` — sisend: email + form fields, insert leads tabelisse.
 
@@ -86,6 +90,7 @@ Verdict: Strong buy.
 ## Failid mida loome / muudame
 
 Uued route'id:
+
 - src/routes/index.tsx (asendame placeholder'i)
 - src/routes/product.tsx
 - src/routes/pricing.tsx
@@ -96,6 +101,7 @@ Uued route'id:
 - src/routes/contact.tsx
 
 Komponendid:
+
 - src/components/site/Header.tsx (nav linkidega)
 - src/components/site/Footer.tsx
 - src/components/site/Hero.tsx
@@ -107,14 +113,17 @@ Komponendid:
 - src/components/ui/* (shadcn — juba olemas)
 
 Server functions:
+
 - src/lib/scan.functions.ts (runScan)
 - src/lib/leads.functions.ts (submitLead)
 - src/lib/scan.server.ts (GitHub fetch + AI Gateway call helpers)
 
 Styling:
+
 - src/styles.css — uuendame token'id Linear dark paletile (bg, surface-1..3, border-hairline, primary lavender, success green), typography skaala
 
 Assets:
+
 - src/assets/hero-product.png — genereeritud "agent dashboard" mock screenshot (premium quality, kuna sisaldab teksti)
 - src/assets/og-default.png — share image
 

@@ -62,10 +62,7 @@ export const runScan = createServerFn({ method: "POST" })
       return { scanId };
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Scan failed.";
-      await supabaseAdmin
-        .from("scans")
-        .update({ status: "error", error: msg })
-        .eq("id", scanId);
+      await supabaseAdmin.from("scans").update({ status: "error", error: msg }).eq("id", scanId);
       throw new Error(msg);
     }
   });
