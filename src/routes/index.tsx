@@ -34,14 +34,14 @@ function Index() {
       ".webdev-asset",
     ]) as HTMLElement[];
 
-    // Initial state: scattered and shattered in Z space
+    // Initial state: plahvatuslikult (explosively) scattered and shattered in Z space
     gsap.set(assets, {
-      z: () => gsap.utils.random(800, 2000),
-      x: () => gsap.utils.random(-1000, 1000),
-      y: () => gsap.utils.random(-1000, 1000),
-      rotationX: () => gsap.utils.random(-90, 90),
-      rotationY: () => gsap.utils.random(-90, 90),
-      rotationZ: () => gsap.utils.random(-90, 90),
+      z: () => gsap.utils.random(1000, 3000),
+      x: () => gsap.utils.random(-1500, 1500),
+      y: () => gsap.utils.random(-1500, 1500),
+      rotationX: () => gsap.utils.random(-180, 180),
+      rotationY: () => gsap.utils.random(-180, 180),
+      rotationZ: () => gsap.utils.random(-180, 180),
       opacity: 0,
     });
 
@@ -102,8 +102,17 @@ function Index() {
                 : "translateZ(0px) scale(1)",
             }}
           >
-            {/* Ambient Lighting & Shadow Floor */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-black/80 pointer-events-none -z-10" />
+            {/* Concrete-textured background plane deep in Z space to catch shadows */}
+            <div
+              className="absolute inset-[-50%] pointer-events-none -z-10 bg-zinc-900 border border-white/5 shadow-2xl"
+              style={{
+                transform: "translateZ(-200px)",
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E")`,
+              }}
+            >
+              {/* Ambient Lighting on the concrete */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/90 pointer-events-none" />
+            </div>
 
             <OSX01 />
             <Laptop />
