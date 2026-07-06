@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { OSX01 } from "../components/motion/OSX01";
@@ -22,131 +22,164 @@ function Index() {
   const sceneRef = useRef<HTMLDivElement>(null);
   const [isPanelActive, setIsPanelActive] = useState(false);
 
-  useEffect(() => {
-    if (!containerRef.current || !sceneRef.current) return;
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
-    // We animate all elements with these classes
-    const assets = gsap.utils.toArray([
-      ".osx01-asset",
-      ".laptop-asset",
-      ".skateboard-asset",
-      ".spraycan-asset",
-      ".webdev-asset",
-    ]) as HTMLElement[];
+    const ctx = gsap.context(() => {
+      // We animate all elements with these classes
+      const assets = gsap.utils.toArray([
+        ".osx01-asset",
+        ".laptop-asset",
+        ".skateboard-asset",
+        ".spraycan-asset",
+        ".webdev-asset",
+      ]) as HTMLElement[];
 
-    // Initial state: scattered and shattered in Z space
-    gsap.set(assets, {
-      z: () => gsap.utils.random(800, 2000),
-      x: () => gsap.utils.random(-1000, 1000),
-      y: () => gsap.utils.random(-1000, 1000),
-      rotationX: () => gsap.utils.random(-90, 90),
-      rotationY: () => gsap.utils.random(-90, 90),
-      rotationZ: () => gsap.utils.random(-90, 90),
-      opacity: 0,
-    });
+      // Initial state: plahvatuslikult (explosively) shattered in deep Z space
+      gsap.set(assets, {
+        z: () => gsap.utils.random(1000, 3000), // Huge depth
+        x: () => gsap.utils.random(-1500, 1500), // Wide scatter
+        y: () => gsap.utils.random(-1500, 1500),
+        rotationX: () => gsap.utils.random(-180, 180),
+        rotationY: () => gsap.utils.random(-180, 180),
+        rotationZ: () => gsap.utils.random(-180, 180),
+        scale: () => gsap.utils.random(0.2, 3), // Varied scale for chaos
+        opacity: 0,
+      });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1, // Smooth scrubbing
-      },
-    });
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.5, // Smoother scrubbing for large movements
+        },
+      });
 
-    // Assemble state
-    tl.to(assets, {
-      z: 0,
-      x: 0,
-      y: 0,
-      rotationX: 0,
-      rotationY: 0,
-      rotationZ: 0,
-      opacity: 1,
-      duration: 1,
-      stagger: 0.1,
-      ease: "power3.inOut",
-    });
+      // Assemble state: bringing them to their configured transform values
+      tl.to(assets, {
+        z: 0,
+        x: 0,
+        y: 0,
+        rotationX: 0,
+        rotationY: 0,
+        rotationZ: 0,
+        scale: 1,
+        opacity: 1,
+        duration: 2,
+        stagger: 0.15, // Slight stagger so they don't arrive exactly together
+        ease: "power3.inOut",
+      });
+    }, container); // Scope GSAP to the container
 
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
+    return () => ctx.revert(); // Cleanup GSAP safely for React strict mode
   }, []);
 
   return (
-    <div className="bg-background min-h-screen text-foreground overflow-x-hidden selection:bg-primary/30">
+    <div className="bg-zinc-950 min-h-screen text-foreground overflow-x-hidden selection:bg-primary/30">
+      {/* SVG Filters for concrete texture */}
+      <svg className="hidden">
+        <filter id="noise">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.8"
+            numOctaves="4"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="matrix" values="1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0.1 0" />
+        </filter>
+      </svg>
+
       {/*
-        Scroll container: h-[400vh] to allow for a long scroll.
+        Scroll container: h-[500vh] to allow for a very long scroll
         We use GSAP to pin the scene.
       */}
-      <div ref={containerRef} className="relative w-full h-[400vh]">
+      <div ref={containerRef} className="relative w-full h-[500vh]">
         {/* The sticky 3D viewport */}
         <div
-          className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center"
-          style={{ perspective: "1500px" }}
+          className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center bg-zinc-950"
+          style={{ perspective: "2000px" }}
         >
+          {/* Concrete Wall Background Texture */}
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-zinc-900 to-zinc-950" />
+            <div
+              className="absolute inset-0 mix-blend-overlay opacity-30"
+              style={{ filter: "url(#noise)" }}
+            />
+            {/* Dramatic ambient vignette lighting */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)] pointer-events-none" />
+          </div>
+
           {/*
             The scene wrapper.
             We preserve 3D so children can have deep Z extrusions.
-            It's dimmable via state.
           */}
           <div
             ref={sceneRef}
-            className={`relative w-full h-full max-w-7xl mx-auto transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
-              isPanelActive ? "opacity-20 blur-md pointer-events-none" : "opacity-100"
+            className={`relative w-full h-full max-w-[1400px] mx-auto z-10 transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+              isPanelActive ? "opacity-20 blur-xl pointer-events-none" : "opacity-100"
             }`}
             style={{
               transformStyle: "preserve-3d",
               transform: isPanelActive
-                ? "translateZ(-800px) scale(0.9)"
-                : "translateZ(0px) scale(1)",
+                ? "translateZ(-1000px) scale(0.8) rotateY(-5deg)"
+                : "translateZ(0px) scale(1) rotateY(0deg)",
             }}
           >
-            {/* Ambient Lighting & Shadow Floor */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-black/80 pointer-events-none -z-10" />
-
             <OSX01 />
             <Laptop />
             <Skateboard />
             <SprayCan />
-
             <WebDevServices onClick={() => setIsPanelActive(true)} />
           </div>
 
           {/* Cyberpunk Service Panel */}
           <div
-            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8 bg-surface-1/90 backdrop-blur-xl border border-primary/50 shadow-[0_0_50px_rgba(var(--primary),0.2)] rounded-2xl w-full max-w-2xl transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 p-8 bg-zinc-950/90 backdrop-blur-3xl border border-primary/50 shadow-[0_0_100px_rgba(var(--primary),0.3)] rounded-2xl w-full max-w-2xl transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
               isPanelActive
                 ? "opacity-100 pointer-events-auto transform translate-z-0 scale-100"
-                : "opacity-0 pointer-events-none transform translate-z-[-200px] scale-90"
+                : "opacity-0 pointer-events-none transform translate-z-[-400px] scale-90"
             }`}
+            style={{ transformStyle: "preserve-3d" }}
           >
-            <h2 className="text-3xl font-bold text-primary mb-4 font-mono tracking-tighter">
-              &gt; WEB_DEV_SERVICES.EXE
-            </h2>
-            <div className="space-y-4 text-muted-foreground font-mono text-sm leading-relaxed">
-              <p className="border-l-2 border-primary pl-4">[INITIATING UPLINK...]</p>
-              <p>
-                We construct high-fidelity interactive zones. No generic layouts. Absolute visual
-                dominance.
-              </p>
-              <ul className="list-none space-y-2 text-foreground/80">
-                <li>
-                  <span className="text-primary mr-2">+</span> 3D Motion Engineering
-                </li>
-                <li>
-                  <span className="text-primary mr-2">+</span> Immersive WebGL Experiences
-                </li>
-                <li>
-                  <span className="text-primary mr-2">+</span> Scroll-Driven Storytelling
-                </li>
-              </ul>
-              <button
-                onClick={() => setIsPanelActive(false)}
-                className="mt-8 px-6 py-3 bg-primary/10 hover:bg-primary/20 border border-primary text-primary transition-colors font-bold uppercase tracking-widest w-full text-center"
-              >
-                [ RETURN_TO_CANVAS ]
-              </button>
+            {/* Holographic grid overlay on panel */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(var(--primary),0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--primary),0.1)_1px,transparent_1px)] bg-[size:20px_20px] rounded-2xl pointer-events-none opacity-20" />
+
+            <div className="relative z-10">
+              <h2 className="text-4xl font-bold text-primary mb-6 font-mono tracking-tighter drop-shadow-[0_0_10px_rgba(var(--primary),0.8)]">
+                &gt; WEB_DEV_SERVICES.EXE
+              </h2>
+              <div className="space-y-6 text-zinc-300 font-mono text-sm leading-relaxed">
+                <div className="border-l-4 border-primary pl-4 py-1 bg-primary/5">
+                  <p className="text-primary animate-pulse">[UPLINK ESTABLISHED...]</p>
+                </div>
+                <p className="text-base text-zinc-400">
+                  We construct high-fidelity interactive zones. No generic layouts. Absolute visual
+                  dominance.
+                </p>
+                <ul className="list-none space-y-3 text-zinc-300">
+                  <li className="flex items-center gap-3">
+                    <span className="text-primary bg-primary/10 p-1 rounded">+</span> 3D Motion
+                    Engineering
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <span className="text-primary bg-primary/10 p-1 rounded">+</span> Immersive
+                    WebGL Experiences
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <span className="text-primary bg-primary/10 p-1 rounded">+</span> Scroll-Driven
+                    Storytelling
+                  </li>
+                </ul>
+                <button
+                  onClick={() => setIsPanelActive(false)}
+                  className="mt-10 px-6 py-4 bg-primary/10 hover:bg-primary/20 border border-primary text-primary transition-all duration-300 font-black uppercase tracking-[0.2em] w-full text-center hover:shadow-[0_0_30px_rgba(var(--primary),0.4)]"
+                >
+                  [ RETURN_TO_CANVAS ]
+                </button>
+              </div>
             </div>
           </div>
         </div>

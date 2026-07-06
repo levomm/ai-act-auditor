@@ -1,66 +1,46 @@
-import React, { useRef, useEffect } from "react";
-import gsap from "gsap";
+import React from "react";
+import { use3DTilt } from "../../hooks/use3DTilt";
 
 export function WebDevServices({ onClick }: { onClick: () => void }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const tiltRef = use3DTilt({ rotationFactor: 0.08, liftZ: 80, durationOut: 0.4, durationIn: 0.9 });
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-
-      gsap.to(el, {
-        rotationY: x * 0.05,
-        rotationX: -y * 0.05,
-        z: 50,
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    };
-
-    const handleMouseLeave = () => {
-      gsap.to(el, {
-        rotationY: 0,
-        rotationX: 0,
-        z: 0,
-        duration: 0.8,
-        ease: "power2.out",
-      });
-    };
-
-    el.addEventListener("mousemove", handleMouseMove);
-    el.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      el.removeEventListener("mousemove", handleMouseMove);
-      el.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, []);
+  // Layers for thick box extrusion
+  const layers = Array.from({ length: 6 }, (_, i) => i);
 
   return (
     <div
-      ref={containerRef}
+      ref={tiltRef}
       onClick={onClick}
       className="webdev-asset absolute top-[60%] left-[45%] cursor-pointer group"
       style={{ transformStyle: "preserve-3d" }}
     >
-      {/* Shadow */}
+      {/* Deep Glowing Shadow */}
       <div
-        className="absolute inset-0 bg-primary/20 blur-2xl rounded-lg group-hover:bg-primary/40 transition-colors duration-500"
-        style={{ transform: "translateZ(-60px) scale(1.1)" }}
+        className="absolute inset-0 bg-primary/40 blur-3xl rounded-xl transition-all duration-500 group-hover:bg-primary/60 group-hover:blur-[40px] group-hover:scale-110"
+        style={{ transform: "translateZ(-80px) scale(1.1)" }}
       />
 
-      {/* Main Plaque */}
+      {/* Extruded box layers */}
+      {layers.map((i) => (
+        <div
+          key={i}
+          className="absolute inset-0 bg-zinc-900 border border-primary/20 rounded-xl"
+          style={{ transform: `translateZ(${-i * 4}px)` }}
+        />
+      ))}
+
+      {/* Main Plaque / Front Layer */}
       <div
-        className="relative bg-zinc-900 border border-primary/30 px-8 py-4 rounded-lg shadow-2xl backdrop-blur-sm overflow-hidden"
+        className="relative bg-zinc-950 border-2 border-primary/50 px-10 py-6 rounded-xl shadow-2xl backdrop-blur-md overflow-hidden group-hover:border-primary transition-colors duration-500"
         style={{ transform: "translateZ(0px)" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-        <span className="text-2xl font-mono font-bold text-white tracking-widest drop-shadow-[0_0_8px_rgba(var(--primary),0.8)]">
+        {/* Neon scanline sweep */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
+
+        {/* CRT scanlines effect */}
+        <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] pointer-events-none opacity-50" />
+
+        <span className="relative z-10 text-3xl font-mono font-black text-white tracking-widest drop-shadow-[0_0_15px_rgba(var(--primary),1)]">
           &lt;WEB_DEV_SERVICES /&gt;
         </span>
       </div>
