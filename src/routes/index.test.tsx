@@ -14,6 +14,10 @@ vi.mock("@tanstack/react-router", () => ({
 vi.mock("gsap", () => {
   const gsapMock = {
     registerPlugin: vi.fn(),
+    context: vi.fn((fn) => {
+      fn();
+      return { revert: vi.fn() };
+    }),
     utils: {
       toArray: vi.fn(() => []),
       random: vi.fn(() => 100),
@@ -56,7 +60,11 @@ describe("Motion Engine Index", () => {
 
     // Panel should initially be hidden
     expect(screen.getAllByText("> WEB_DEV_SERVICES.EXE").length).toBeGreaterThan(0);
-    const panel = screen.getAllByText("> WEB_DEV_SERVICES.EXE")[0].closest("div");
+
+    // Find the main parent wrapper with the opacity toggle class
+    const panelInnerWrapper = screen.getAllByText("> WEB_DEV_SERVICES.EXE")[0].closest("div");
+    const panel = panelInnerWrapper?.closest(".absolute.top-1\\/2");
+
     expect(panel?.className).toContain("opacity-0");
 
     // Click to open
