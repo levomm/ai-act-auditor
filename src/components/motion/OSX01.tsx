@@ -10,7 +10,7 @@ export function OSX01() {
   return (
     <div
       ref={tiltRef}
-      className="osx01-asset absolute top-[10%] left-[20%] cursor-pointer group"
+      className="osx01-asset absolute top-[10%] left-[20%] w-[600px] h-[300px] cursor-pointer group"
       style={{ transformStyle: "preserve-3d" }}
     >
       {/* Deep Contact Shadow */}
