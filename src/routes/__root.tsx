@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { logger } from "../lib/logger";
 import {
   Outlet,
   Link,
@@ -33,7 +34,7 @@ function NotFoundComponent() {
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  console.error(error);
+  logger.error(error);
   const router = useRouter();
 
   return (
