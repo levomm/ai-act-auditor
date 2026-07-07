@@ -5,7 +5,7 @@ export function SprayCan() {
   const tiltRef = use3DTilt();
 
   // Create layers to simulate a cylindrical extrusion for the can body
-  const canLayers = Array.from({ length: 12 }, (_, i) => i);
+  const canLayers = Array.from({ length: 16 }, (_, i) => i);
 
   return (
     <div
@@ -16,7 +16,7 @@ export function SprayCan() {
       {/* Deep Shadow */}
       <div
         className="absolute inset-0 bg-black/80 blur-2xl rounded-full transition-all duration-500 group-hover:bg-black/50 group-hover:blur-3xl"
-        style={{ transform: "translateZ(-50px) translate-x-[40px] translateY(20px) scale(0.9)" }}
+        style={{ transform: "translateZ(-80px) translate-x-[40px] translateY(20px) scale(0.9)" }}
       />
 
       {/* Cap depth */}

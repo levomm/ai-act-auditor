@@ -5,7 +5,7 @@ export function Skateboard() {
   const tiltRef = use3DTilt();
 
   // Create layers for the deck thickness (plywood layers)
-  const deckLayers = Array.from({ length: 8 }, (_, i) => i);
+  const deckLayers = Array.from({ length: 12 }, (_, i) => i);
 
   return (
     <div
@@ -16,7 +16,7 @@ export function Skateboard() {
       {/* Deep Ground Shadow */}
       <div
         className="absolute inset-0 bg-black/90 blur-2xl rounded-full transition-all duration-500 group-hover:bg-black/70 group-hover:blur-3xl"
-        style={{ transform: "translateZ(-80px) translateY(60px) scale(0.85)" }}
+        style={{ transform: "translateZ(-120px) translateY(60px) scale(0.85)" }}
       />
 
       {/* Wheels/Trucks fake representation for depth behind */}

@@ -5,7 +5,7 @@ export function OSX01() {
   const tiltRef = use3DTilt();
 
   // Creating an array for tight Z-axis layer doubling (extrusion)
-  const layers = Array.from({ length: 15 }, (_, i) => i);
+  const layers = Array.from({ length: 25 }, (_, i) => i);
 
   return (
     <div
@@ -16,7 +16,7 @@ export function OSX01() {
       {/* Deep Contact Shadow */}
       <div
         className="absolute inset-0 bg-black/80 blur-xl transition-all duration-500 group-hover:bg-black/40 group-hover:blur-2xl"
-        style={{ transform: "translateZ(-40px) scale(0.95)" }}
+        style={{ transform: "translateZ(-80px) scale(0.95)" }}
       >
         <span className="text-[12rem] font-black tracking-tighter text-transparent">OSX01</span>
       </div>

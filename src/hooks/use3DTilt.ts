@@ -34,12 +34,32 @@ export function use3DTilt(
       });
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      const rect = el.getBoundingClientRect();
+      const touch = e.touches[0];
+      if (!touch) return;
+      const x = touch.clientX - rect.left - rect.width / 2;
+      const y = touch.clientY - rect.top - rect.height / 2;
+
+      gsap.to(el, {
+        rotationY: x * options.rotationFactor,
+        rotationX: -y * options.rotationFactor,
+        z: options.liftZ,
+        duration: options.durationOut,
+        ease: "power2.out",
+      });
+    };
+
     el.addEventListener("mousemove", handleMouseMove);
     el.addEventListener("mouseleave", handleMouseLeave);
+    el.addEventListener("touchmove", handleTouchMove, { passive: true });
+    el.addEventListener("touchend", handleMouseLeave);
 
     return () => {
       el.removeEventListener("mousemove", handleMouseMove);
       el.removeEventListener("mouseleave", handleMouseLeave);
+      el.removeEventListener("touchmove", handleTouchMove);
+      el.removeEventListener("touchend", handleMouseLeave);
     };
   }, [options.rotationFactor, options.liftZ, options.durationOut, options.durationIn]);
 

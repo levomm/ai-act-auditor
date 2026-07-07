@@ -5,7 +5,7 @@ export function WebDevServices({ onClick }: { onClick: () => void }) {
   const tiltRef = use3DTilt({ rotationFactor: 0.08, liftZ: 80, durationOut: 0.4, durationIn: 0.9 });
 
   // Layers for thick box extrusion
-  const layers = Array.from({ length: 6 }, (_, i) => i);
+  const layers = Array.from({ length: 10 }, (_, i) => i);
 
   return (
     <div
@@ -17,7 +17,7 @@ export function WebDevServices({ onClick }: { onClick: () => void }) {
       {/* Deep Glowing Shadow */}
       <div
         className="absolute inset-0 bg-primary/40 blur-3xl rounded-xl transition-all duration-500 group-hover:bg-primary/60 group-hover:blur-[40px] group-hover:scale-110"
-        style={{ transform: "translateZ(-80px) scale(1.1)" }}
+        style={{ transform: "translateZ(-120px) scale(1.1)" }}
       />
 
       {/* Extruded box layers */}
