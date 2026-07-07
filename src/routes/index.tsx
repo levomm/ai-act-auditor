@@ -38,7 +38,7 @@ function Index() {
 
       // Initial state: plahvatuslikult (explosively) shattered in deep Z space
       gsap.set(assets, {
-        z: () => gsap.utils.random(1000, 3000), // Huge depth
+        z: () => gsap.utils.random(-3000, -1000), // Push them backwards in Z-space, not towards the camera past perspective
         x: () => gsap.utils.random(-1500, 1500), // Wide scatter
         y: () => gsap.utils.random(-1500, 1500),
         rotationX: () => gsap.utils.random(-180, 180),
@@ -119,12 +119,12 @@ function Index() {
           <div
             ref={sceneRef}
             className={`relative w-full h-full max-w-[1400px] mx-auto z-10 transition-all duration-1000 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
-              isPanelActive ? "opacity-20 blur-xl pointer-events-none" : "opacity-100"
+              isPanelActive ? "opacity-10 blur-2xl pointer-events-none" : "opacity-100"
             }`}
             style={{
               transformStyle: "preserve-3d",
               transform: isPanelActive
-                ? "translateZ(-1000px) scale(0.8) rotateY(-5deg)"
+                ? "translateZ(-2000px) scale(0.6) rotateY(-10deg)"
                 : "translateZ(0px) scale(1) rotateY(0deg)",
             }}
           >

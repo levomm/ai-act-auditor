@@ -5,8 +5,8 @@ export function Laptop() {
   const tiltRef = use3DTilt();
 
   // Create layers for the laptop body extrusion
-  const baseLayers = Array.from({ length: 8 }, (_, i) => i);
-  const screenLayers = Array.from({ length: 4 }, (_, i) => i);
+  const baseLayers = Array.from({ length: 12 }, (_, i) => i);
+  const screenLayers = Array.from({ length: 6 }, (_, i) => i);
 
   return (
     <div
@@ -17,7 +17,7 @@ export function Laptop() {
       {/* Deep Shadow */}
       <div
         className="absolute inset-0 bg-black/80 rounded-xl blur-2xl transition-all duration-500 group-hover:bg-black/60 group-hover:blur-3xl"
-        style={{ transform: "translateZ(-60px) scale(0.9) translateY(20px)" }}
+        style={{ transform: "translateZ(-100px) scale(0.9) translateY(20px)" }}
       />
 
       {/* Base thickness */}
