@@ -10,10 +10,13 @@ export function use3DTilt(
     const el = ref.current;
     if (!el) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMove = (e: MouseEvent | TouchEvent) => {
       const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
+      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+      const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+
+      const x = clientX - rect.left - rect.width / 2;
+      const y = clientY - rect.top - rect.height / 2;
 
       gsap.to(el, {
         rotationY: x * options.rotationFactor,
@@ -24,7 +27,7 @@ export function use3DTilt(
       });
     };
 
-    const handleMouseLeave = () => {
+    const handleLeave = () => {
       gsap.to(el, {
         rotationY: 0,
         rotationX: 0,
@@ -34,12 +37,18 @@ export function use3DTilt(
       });
     };
 
-    el.addEventListener("mousemove", handleMouseMove);
-    el.addEventListener("mouseleave", handleMouseLeave);
+    el.addEventListener("mousemove", handleMove);
+    el.addEventListener("mouseleave", handleLeave);
+    el.addEventListener("touchmove", handleMove, { passive: true });
+    el.addEventListener("touchend", handleLeave);
+    el.addEventListener("touchcancel", handleLeave);
 
     return () => {
-      el.removeEventListener("mousemove", handleMouseMove);
-      el.removeEventListener("mouseleave", handleMouseLeave);
+      el.removeEventListener("mousemove", handleMove);
+      el.removeEventListener("mouseleave", handleLeave);
+      el.removeEventListener("touchmove", handleMove);
+      el.removeEventListener("touchend", handleLeave);
+      el.removeEventListener("touchcancel", handleLeave);
     };
   }, [options.rotationFactor, options.liftZ, options.durationOut, options.durationIn]);
 
