@@ -45,7 +45,6 @@ function Index() {
         rotationY: () => gsap.utils.random(-180, 180),
         rotationZ: () => gsap.utils.random(-180, 180),
         scale: () => gsap.utils.random(0.2, 3), // Varied scale for chaos
-        opacity: 0,
       });
 
       const tl = gsap.timeline({
@@ -66,7 +65,6 @@ function Index() {
         rotationY: 0,
         rotationZ: 0,
         scale: 1,
-        opacity: 1,
         duration: 2,
         stagger: 0.15, // Slight stagger so they don't arrive exactly together
         ease: "power3.inOut",
