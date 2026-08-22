@@ -61,6 +61,13 @@ const ChartContainer = React.forwardRef<
 });
 ChartContainer.displayName = "Chart";
 
+const sanitizeCssIdentifier = (val: string) => val.replace(/[^a-zA-Z0-9_-]/g, "");
+
+const sanitizeCssValue = (val: string) => {
+  // Strip dangerous characters like angle brackets, quotes, braces, semicolons, and backslashes
+  return val.replace(/[<>{};\\"'\r\n]/g, "");
+};
+
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(([, config]) => config.theme || config.color);
 
@@ -68,17 +75,21 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     return null;
   }
 
+  const cleanId = sanitizeCssIdentifier(id);
+
   return (
     <style
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
             ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
+${prefix} [data-chart=${cleanId}] {
 ${colorConfig
   .map(([key, itemConfig]) => {
     const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
-    return color ? `  --color-${key}: ${color};` : null;
+    const cleanKey = sanitizeCssIdentifier(key);
+    const cleanColor = color ? sanitizeCssValue(color) : null;
+    return cleanColor ? `  --color-${cleanKey}: ${cleanColor};` : null;
   })
   .join("\n")}
 }
