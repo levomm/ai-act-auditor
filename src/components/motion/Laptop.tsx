@@ -1,12 +1,13 @@
 import React from "react";
 import { use3DTilt } from "../../hooks/use3DTilt";
+import { range } from "@/lib/utils";
 
 export function Laptop() {
   const tiltRef = use3DTilt();
 
   // Create layers for the laptop body extrusion
-  const baseLayers = Array.from({ length: 8 }, (_, i) => i);
-  const screenLayers = Array.from({ length: 4 }, (_, i) => i);
+  const baseLayers = range(8);
+  const screenLayers = range(4);
 
   return (
     <div
