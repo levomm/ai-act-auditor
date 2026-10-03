@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { fetchRepoContext, runAssessment, type RepoContext } from "./scan.server";
 
@@ -16,8 +17,8 @@ const inputSchema = z
 export const runScan = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => inputSchema.parse(data))
   .handler(async ({ data }) => {
-    // 1. Create pending row first so we have a stable id
-    const { data: inserted, error: insertErr } = await supabaseAdmin
+    // 1. Create pending row first so we have a stable id (enforcing RLS via public client)
+    const { data: inserted, error: insertErr } = await supabase
       .from("scans")
       .insert({
         email: data.email,
@@ -30,8 +31,8 @@ export const runScan = createServerFn({ method: "POST" })
 
     const scanId = inserted.id;
 
-    // 2. Capture lead
-    await supabaseAdmin.from("leads").insert({
+    // 2. Capture lead (enforcing RLS via public client)
+    await supabase.from("leads").insert({
       email: data.email,
       source: "scan",
       scan_id: scanId,
