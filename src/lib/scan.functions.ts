@@ -3,7 +3,7 @@ import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import { fetchRepoContext, runAssessment, type RepoContext } from "./scan.server";
 
-const inputSchema = z
+export const scanInputSchema = z
   .object({
     email: z.string().trim().email().max(255),
     repoUrl: z.string().trim().url().max(500).optional(),
@@ -14,7 +14,7 @@ const inputSchema = z
   });
 
 export const runScan = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) => inputSchema.parse(data))
+  .inputValidator((data: unknown) => scanInputSchema.parse(data))
   .handler(async ({ data }) => {
     // 1. Create pending row first so we have a stable id
     const { data: inserted, error: insertErr } = await supabaseAdmin
