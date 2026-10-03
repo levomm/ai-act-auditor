@@ -16,11 +16,11 @@ export type RepoContext = {
   uploadedText?: string;
 };
 
-function parseGithubUrl(url: string): { owner: string; repo: string } | null {
+export function parseGithubUrl(url: string): { owner: string; repo: string } | null {
   try {
     const u = new URL(url);
     if (!u.hostname.includes("github.com")) return null;
-    const [owner, repo] = u.pathname.replace(/^\/+|\/+$/g, "").split("/");
+    const [owner, repo] = u.pathname.split("/").filter(Boolean);
     if (!owner || !repo) return null;
     return { owner, repo: repo.replace(/\.git$/, "") };
   } catch {
