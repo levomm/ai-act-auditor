@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import type { Json } from "@/integrations/supabase/types";
 import { fetchRepoContext, runAssessment, type RepoContext } from "./scan.server";
 
 const inputSchema = z
@@ -54,8 +55,8 @@ export const runScan = createServerFn({ method: "POST" })
           status: "complete",
           score: assessment.readiness_score,
           classification: assessment.classification,
-          top_risks: assessment.top_risks as unknown as never,
-          full_report: assessment as unknown as never,
+          top_risks: assessment.top_risks as unknown as Json,
+          full_report: assessment as unknown as Json,
         })
         .eq("id", scanId);
 
