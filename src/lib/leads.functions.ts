@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
-const schema = z.object({
+export const leadSchema = z.object({
   email: z.string().trim().email().max(255),
   source: z.enum(["dfy_booking", "waitlist", "contact"]),
   company: z.string().trim().max(200).optional(),
@@ -12,7 +12,7 @@ const schema = z.object({
 });
 
 export const submitLead = createServerFn({ method: "POST" })
-  .inputValidator((d: unknown) => schema.parse(d))
+  .inputValidator((d: unknown) => leadSchema.parse(d))
   .handler(async ({ data }) => {
     const { error } = await supabaseAdmin.from("leads").insert({
       email: data.email,
