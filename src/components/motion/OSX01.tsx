@@ -1,11 +1,12 @@
 import React from "react";
 import { use3DTilt } from "../../hooks/use3DTilt";
+import { range } from "../../lib/utils";
 
 export function OSX01() {
   const tiltRef = use3DTilt();
 
   // Creating an array for tight Z-axis layer doubling (extrusion)
-  const layers = Array.from({ length: 15 }, (_, i) => i);
+  const layers = range(15);
 
   return (
     <div
