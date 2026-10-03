@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
@@ -51,37 +51,43 @@ const classificationLabel: Record<string, string> = {
 
 function ScanResult() {
   const { scanId } = useParams({ from: "/scan/result/$scanId" });
-  const [row, setRow] = useState<ScanRow | null>(null);
-  const [err, setErr] = useState<string | null>(null);
 
-  useEffect(() => {
-    let mounted = true;
-    let interval: ReturnType<typeof setInterval> | null = null;
-
-    const fetchOnce = async () => {
+  const { data: row = null, error } = useQuery({
+    queryKey: ["scan", scanId],
+    queryFn: async () => {
       const { data, error } = await supabase
         .from("scans")
         .select("*")
         .eq("id", scanId)
         .maybeSingle();
-      if (!mounted) return;
-      if (error) {
-        setErr(error.message);
-        return;
-      }
-      if (data) setRow(data as unknown as ScanRow);
-      if (data && (data.status === "complete" || data.status === "error") && interval) {
-        clearInterval(interval);
-      }
-    };
 
-    fetchOnce();
-    interval = setInterval(fetchOnce, 2500);
-    return () => {
-      mounted = false;
-      if (interval) clearInterval(interval);
-    };
-  }, [scanId]);
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data as unknown as ScanRow | null;
+    },
+    enabled: Boolean(scanId),
+    refetchInterval: (query) => {
+      const data = query.state.data;
+
+      // Stop polling if fetch threw an error or status is terminal (complete / error)
+      if (
+        query.state.status === "error" ||
+        (data && (data.status === "complete" || data.status === "error"))
+      ) {
+        return false;
+      }
+
+      // Exponential backoff strategy:
+      // Starts at 2500ms, increases by 1.5x on each update attempt, capped at 15000ms.
+      const updateCount = query.state.dataUpdateCount;
+      const initialInterval = 2500;
+      const maxInterval = 15000;
+      return Math.min(initialInterval * Math.pow(1.5, updateCount), maxInterval);
+    },
+  });
+
+  const err = error instanceof Error ? error.message : error ? String(error) : null;
 
   if (err) {
     return (
