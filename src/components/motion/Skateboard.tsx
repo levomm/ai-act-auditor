@@ -1,3 +1,4 @@
+import { range } from "../../lib/utils";
 import React from "react";
 import { use3DTilt } from "../../hooks/use3DTilt";
 
@@ -5,7 +6,7 @@ export function Skateboard() {
   const tiltRef = use3DTilt();
 
   // Create layers for the deck thickness (plywood layers)
-  const deckLayers = Array.from({ length: 8 }, (_, i) => i);
+  const deckLayers = range(8);
 
   return (
     <div

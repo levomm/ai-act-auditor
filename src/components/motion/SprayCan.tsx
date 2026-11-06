@@ -1,3 +1,4 @@
+import { range } from "../../lib/utils";
 import React from "react";
 import { use3DTilt } from "../../hooks/use3DTilt";
 
@@ -5,7 +6,7 @@ export function SprayCan() {
   const tiltRef = use3DTilt();
 
   // Create layers to simulate a cylindrical extrusion for the can body
-  const canLayers = Array.from({ length: 12 }, (_, i) => i);
+  const canLayers = range(12);
 
   return (
     <div
