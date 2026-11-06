@@ -1,3 +1,4 @@
+import { range } from "../../lib/utils";
 import React from "react";
 import { use3DTilt } from "../../hooks/use3DTilt";
 
@@ -5,7 +6,7 @@ export function WebDevServices({ onClick }: { onClick: () => void }) {
   const tiltRef = use3DTilt({ rotationFactor: 0.08, liftZ: 80, durationOut: 0.4, durationIn: 0.9 });
 
   // Layers for thick box extrusion
-  const layers = Array.from({ length: 6 }, (_, i) => i);
+  const layers = range(6);
 
   return (
     <div
