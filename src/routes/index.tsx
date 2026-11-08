@@ -20,6 +20,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<HTMLDivElement>(null);
+  const assemblyRef = useRef<HTMLDivElement>(null);
   const [isPanelActive, setIsPanelActive] = useState(false);
 
   useLayoutEffect(() => {
@@ -38,15 +39,20 @@ function Index() {
 
       // Initial state: plahvatuslikult (explosively) shattered in deep Z space
       gsap.set(assets, {
-        z: () => gsap.utils.random(1000, 3000), // Huge depth
-        x: () => gsap.utils.random(-1500, 1500), // Wide scatter
-        y: () => gsap.utils.random(-1500, 1500),
-        rotationX: () => gsap.utils.random(-180, 180),
-        rotationY: () => gsap.utils.random(-180, 180),
-        rotationZ: () => gsap.utils.random(-180, 180),
-        scale: () => gsap.utils.random(0.2, 3), // Varied scale for chaos
+        z: (i) => 1500 + i * 800, // Dramatic Z-axis scatter
+        x: () => gsap.utils.random(-1000, 1000),
+        y: () => gsap.utils.random(-1000, 1000),
+        rotationX: () => gsap.utils.random(-90, 90),
+        rotationY: () => gsap.utils.random(-90, 90),
+        rotationZ: () => gsap.utils.random(-90, 90),
+        scale: () => gsap.utils.random(0.5, 2),
         opacity: 0,
       });
+
+      // Initial camera position (pushed back)
+      if (assemblyRef.current) {
+        gsap.set(assemblyRef.current, { z: -2000 });
+      }
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -57,20 +63,37 @@ function Index() {
         },
       });
 
+      // Camera flies forward
+      if (assemblyRef.current) {
+        tl.to(
+          assemblyRef.current,
+          {
+            z: 0,
+            duration: 2,
+            ease: "power2.inOut",
+          },
+          0
+        );
+      }
+
       // Assemble state: bringing them to their configured transform values
-      tl.to(assets, {
-        z: 0,
-        x: 0,
-        y: 0,
-        rotationX: 0,
-        rotationY: 0,
-        rotationZ: 0,
-        scale: 1,
-        opacity: 1,
-        duration: 2,
-        stagger: 0.15, // Slight stagger so they don't arrive exactly together
-        ease: "power3.inOut",
-      });
+      tl.to(
+        assets,
+        {
+          z: 0,
+          x: 0,
+          y: 0,
+          rotationX: 0,
+          rotationY: 0,
+          rotationZ: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 2,
+          stagger: 0.2, // Continuous 3D assembly stagger
+          ease: "power3.inOut",
+        },
+        0 // Start synchronously with the camera movement
+      );
     }, container); // Scope GSAP to the container
 
     return () => ctx.revert(); // Cleanup GSAP safely for React strict mode
@@ -128,11 +151,13 @@ function Index() {
                 : "translateZ(0px) scale(1) rotateY(0deg)",
             }}
           >
-            <OSX01 />
-            <Laptop />
-            <Skateboard />
-            <SprayCan />
-            <WebDevServices onClick={() => setIsPanelActive(true)} />
+            <div ref={assemblyRef} className="absolute inset-0 w-full h-full" style={{ transformStyle: "preserve-3d" }}>
+              <OSX01 />
+              <Laptop />
+              <Skateboard />
+              <SprayCan />
+              <WebDevServices onClick={() => setIsPanelActive(true)} />
+            </div>
           </div>
 
           {/* Cyberpunk Service Panel */}
