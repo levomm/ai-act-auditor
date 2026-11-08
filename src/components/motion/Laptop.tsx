@@ -5,8 +5,8 @@ export function Laptop() {
   const tiltRef = use3DTilt();
 
   // Create layers for the laptop body extrusion
-  const baseLayers = Array.from({ length: 8 }, (_, i) => i);
-  const screenLayers = Array.from({ length: 4 }, (_, i) => i);
+  const baseLayers = Array.from({ length: 16 }, (_, i) => i);
+  const screenLayers = Array.from({ length: 8 }, (_, i) => i);
 
   return (
     <div
@@ -16,16 +16,16 @@ export function Laptop() {
     >
       {/* Deep Shadow */}
       <div
-        className="absolute inset-0 bg-black/80 rounded-xl blur-2xl transition-all duration-500 group-hover:bg-black/60 group-hover:blur-3xl"
-        style={{ transform: "translateZ(-60px) scale(0.9) translateY(20px)" }}
+        className="absolute inset-0 bg-black/80 rounded-xl blur-3xl transition-all duration-500 group-hover:bg-black/60 group-hover:blur-[40px]"
+        style={{ transform: "translateZ(-120px) scale(0.85) translateY(30px)" }}
       />
 
       {/* Base thickness */}
       {baseLayers.map((i) => (
         <div
           key={`base-${i}`}
-          className="absolute inset-x-0 bottom-0 h-[20px] bg-zinc-700 rounded-b-xl"
-          style={{ transform: `translateZ(${-i * 2}px) translateY(10px) rotateX(20deg)` }}
+          className={`absolute inset-x-0 bottom-0 h-[30px] rounded-b-xl ${i % 2 === 0 ? 'bg-zinc-800' : 'bg-zinc-700'}`}
+          style={{ transform: `translateZ(${-i * 2}px) translateY(15px) rotateX(25deg)` }}
         />
       ))}
 
@@ -33,14 +33,14 @@ export function Laptop() {
       {screenLayers.map((i) => (
         <div
           key={`screen-${i}`}
-          className="absolute inset-0 bg-zinc-700 rounded-xl border border-zinc-600"
+          className={`absolute inset-0 rounded-xl border border-zinc-600 ${i % 2 === 0 ? 'bg-zinc-800' : 'bg-zinc-700'}`}
           style={{ transform: `translateZ(${-i * 2}px)` }}
         />
       ))}
 
       {/* Front layer representing laptop screen */}
       <div
-        className="absolute inset-0 bg-zinc-800 rounded-xl border-4 border-zinc-600 shadow-2xl flex flex-col overflow-hidden"
+        className="absolute inset-0 bg-zinc-800 rounded-xl border-4 border-zinc-500 shadow-[0_0_30px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden"
         style={{ transform: "translateZ(0px)" }}
       >
         {/* Webcam dot */}

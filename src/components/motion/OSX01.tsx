@@ -5,7 +5,7 @@ export function OSX01() {
   const tiltRef = use3DTilt();
 
   // Creating an array for tight Z-axis layer doubling (extrusion)
-  const layers = Array.from({ length: 15 }, (_, i) => i);
+  const layers = Array.from({ length: 30 }, (_, i) => i);
 
   return (
     <div
@@ -15,8 +15,8 @@ export function OSX01() {
     >
       {/* Deep Contact Shadow */}
       <div
-        className="absolute inset-0 bg-black/80 blur-xl transition-all duration-500 group-hover:bg-black/40 group-hover:blur-2xl"
-        style={{ transform: "translateZ(-40px) scale(0.95)" }}
+        className="absolute inset-0 bg-black/80 blur-2xl transition-all duration-500 group-hover:bg-black/50 group-hover:blur-3xl group-hover:translate-y-4"
+        style={{ transform: "translateZ(-80px) scale(0.95)" }}
       >
         <span className="text-[12rem] font-black tracking-tighter text-transparent">OSX01</span>
       </div>
@@ -24,13 +24,13 @@ export function OSX01() {
       {/* Extruded side walls (layer doubling) */}
       {layers.map((i) => (
         <div key={i} className="absolute inset-0" style={{ transform: `translateZ(${-i * 2}px)` }}>
-          <span className="text-[12rem] font-black tracking-tighter text-zinc-800">OSX01</span>
+          <span className={`text-[12rem] font-black tracking-tighter ${i % 2 === 0 ? 'text-zinc-800' : 'text-zinc-900'}`}>OSX01</span>
         </div>
       ))}
 
       {/* Front layer */}
       <div className="absolute inset-0" style={{ transform: "translateZ(0px)" }}>
-        <span className="text-[12rem] font-black tracking-tighter text-zinc-100 drop-shadow-lg">
+        <span className="text-[12rem] font-black tracking-tighter text-zinc-100 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
           OSX01
         </span>
       </div>

@@ -5,7 +5,7 @@ export function SprayCan() {
   const tiltRef = use3DTilt();
 
   // Create layers to simulate a cylindrical extrusion for the can body
-  const canLayers = Array.from({ length: 12 }, (_, i) => i);
+  const canLayers = Array.from({ length: 24 }, (_, i) => i);
 
   return (
     <div
@@ -15,8 +15,8 @@ export function SprayCan() {
     >
       {/* Deep Shadow */}
       <div
-        className="absolute inset-0 bg-black/80 blur-2xl rounded-full transition-all duration-500 group-hover:bg-black/50 group-hover:blur-3xl"
-        style={{ transform: "translateZ(-50px) translate-x-[40px] translateY(20px) scale(0.9)" }}
+        className="absolute inset-0 bg-black/80 blur-3xl rounded-full transition-all duration-500 group-hover:bg-black/50 group-hover:blur-[40px] group-hover:translate-x-[60px]"
+        style={{ transform: "translateZ(-80px) translate-x-[50px] translateY(30px) scale(0.85)" }}
       />
 
       {/* Cap depth */}
@@ -34,15 +34,15 @@ export function SprayCan() {
       {/* Can Body Depth (Cylindrical illusion via layer doubling) */}
       {canLayers.map((i) => {
         // Darken edges slightly for cylindrical shading
-        const widthShrink = Math.abs(i - 6) * 1.5;
+        const widthShrink = Math.abs(i - 12) * 1.2;
         return (
           <div
             key={i}
-            className="absolute inset-y-0 bg-red-900 rounded-3xl"
+            className={`absolute inset-y-0 rounded-3xl ${i % 2 === 0 ? 'bg-red-800' : 'bg-red-900'}`}
             style={{
               left: `${widthShrink}px`,
               right: `${widthShrink}px`,
-              transform: `translateZ(${-i * 3}px)`,
+              transform: `translateZ(${-i * 2}px)`,
             }}
           />
         );

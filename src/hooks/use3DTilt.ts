@@ -10,7 +10,7 @@ export function use3DTilt(
     const el = ref.current;
     if (!el) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerMove = (e: PointerEvent) => {
       const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
@@ -24,7 +24,7 @@ export function use3DTilt(
       });
     };
 
-    const handleMouseLeave = () => {
+    const handlePointerLeave = () => {
       gsap.to(el, {
         rotationY: 0,
         rotationX: 0,
@@ -34,12 +34,12 @@ export function use3DTilt(
       });
     };
 
-    el.addEventListener("mousemove", handleMouseMove);
-    el.addEventListener("mouseleave", handleMouseLeave);
+    el.addEventListener("pointermove", handlePointerMove);
+    el.addEventListener("pointerleave", handlePointerLeave);
 
     return () => {
-      el.removeEventListener("mousemove", handleMouseMove);
-      el.removeEventListener("mouseleave", handleMouseLeave);
+      el.removeEventListener("pointermove", handlePointerMove);
+      el.removeEventListener("pointerleave", handlePointerLeave);
     };
   }, [options.rotationFactor, options.liftZ, options.durationOut, options.durationIn]);
 

@@ -5,7 +5,7 @@ export function WebDevServices({ onClick }: { onClick: () => void }) {
   const tiltRef = use3DTilt({ rotationFactor: 0.08, liftZ: 80, durationOut: 0.4, durationIn: 0.9 });
 
   // Layers for thick box extrusion
-  const layers = Array.from({ length: 6 }, (_, i) => i);
+  const layers = Array.from({ length: 12 }, (_, i) => i);
 
   return (
     <div
@@ -16,22 +16,22 @@ export function WebDevServices({ onClick }: { onClick: () => void }) {
     >
       {/* Deep Glowing Shadow */}
       <div
-        className="absolute inset-0 bg-primary/40 blur-3xl rounded-xl transition-all duration-500 group-hover:bg-primary/60 group-hover:blur-[40px] group-hover:scale-110"
-        style={{ transform: "translateZ(-80px) scale(1.1)" }}
+        className="absolute inset-0 bg-primary/40 blur-[40px] rounded-xl transition-all duration-500 group-hover:bg-primary/60 group-hover:blur-[60px] group-hover:scale-110"
+        style={{ transform: "translateZ(-120px) scale(1.15)" }}
       />
 
       {/* Extruded box layers */}
       {layers.map((i) => (
         <div
           key={i}
-          className="absolute inset-0 bg-zinc-900 border border-primary/20 rounded-xl"
+          className={`absolute inset-0 border border-primary/20 rounded-xl ${i % 2 === 0 ? 'bg-zinc-800' : 'bg-zinc-900'}`}
           style={{ transform: `translateZ(${-i * 4}px)` }}
         />
       ))}
 
       {/* Main Plaque / Front Layer */}
       <div
-        className="relative bg-zinc-950 border-2 border-primary/50 px-10 py-6 rounded-xl shadow-2xl backdrop-blur-md overflow-hidden group-hover:border-primary transition-colors duration-500"
+        className="relative bg-zinc-950 border-2 border-primary/50 px-10 py-6 rounded-xl shadow-[0_0_30px_rgba(var(--primary),0.2)] backdrop-blur-md overflow-hidden group-hover:border-primary group-hover:shadow-[0_0_50px_rgba(var(--primary),0.5)] transition-all duration-500"
         style={{ transform: "translateZ(0px)" }}
       >
         {/* Neon scanline sweep */}
